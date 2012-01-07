@@ -30,7 +30,7 @@
 					<input id="question2" class="question_input" type="text" name="response2" onclick="brighten('#question2')"> 
 				 <p>What is your favorite color?</p>
 					<input id="question3" class="question_input" type="text" name="response3" onclick="brighten('#question3')">
-				<div id="button_wrapper"><a href="#" class="mingleButton" onclick="connect()">Mingle >>></a></div>
+				<div id="question_button_wrapper"><a href="#" class="mingleButton" onclick="connect()">Mingle >>></a></div>
 			</form>
 		</div>
 	</div>

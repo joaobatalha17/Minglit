@@ -13,27 +13,64 @@ body{
 ** Style Elements for game.php
 */
 #game_wrapper > #main{
-	text-align:center;	
-}
-
-#video_container{
-	width:1200px; 
-	text-align:center; 
-	/*border:2px solid blue;*/ 
-	margin:0 auto 0;
-	background-color:lightgrey;
-	background: -moz-radial-gradient( 50% 50%, circle, lightgray 0px, #4F4F4F 500px );
-	position:relative;
-}
-
-.video{
-	margin:15px 20px;
-	width:370px;
-	height:278px;
-	border:2px solid black;
+	text-align:center;
+	background-color:white;
+	margin: 5% auto 0;
+	width:100%;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
 	border-radius:10px;
+	border:3px solid black;
+}
+
+
+#question_container{
+	margin:0 auto 0;
+	width:1204px;
+
+}
+
+#label_container{
+	margin:0 auto 0;
+	width:1204px;
+	height:80px;
+}
+
+#label_button_wrapper{
+	width:299px;
+	height:60px;
+	float:left;
+}
+
+#label_button_wrapper > .minglebutton:active{
+	position:relative;
+	top:3px;
+}
+
+
+#video_container{
+	width:1204px; 
+	height:225px;
+	text-align:center; 
+	/*border:2px solid blue;*/ 
+	margin:2% auto 2%;
+	position:relative;
+	border:3px solid black;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+}
+
+.video{
+	float:left;
+	padding:0;
+	margin:0 auto 0;
+	width:299px;
+	height:224px;
+	border:1px solid black;
+	/*-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;*/
 }
 
 /*
@@ -109,6 +146,28 @@ div > .question_input{
 	background-color:white;
 }
 
+#label_container > .mingle_button {
+	/*width:299px;
+	height:10px;
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #58c750), color-stop(1, #61ab52) );
+	background:-moz-linear-gradient( center top, #58c750 5%, #61ab52 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#58c750', endColorstr='#61ab52');
+	background-color:#58c750;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	border:2px solid #000000;
+	display:inline-block;
+	color:#EBFF6B;
+	font-family:arial;
+	font-size:24px;
+	font-weight:bold;
+	padding:10px 10px;
+	text-decoration:none;*/
+}
 
 .mingleButton {
 	margin: 12px 0 0 11px;
@@ -149,6 +208,13 @@ div > .question_input{
 	position:relative;
 	top:3px;
 }
+
+#question_button_wrapper > .mingleButton:active{
+	position:relative;
+	left:3px;
+}
+
+
 
 
 /*

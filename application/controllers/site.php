@@ -4,18 +4,18 @@ class Site extends CI_Controller
 {
 	function __construct()
 	{
-		parent::Controller();
+		parent::__construct();
 		$this->is_logged_in();
 	}
 
 	function members_area()
 	{
-		$this->load->view('logged_in_area');
+		$this->load->view('questions_form');
 	}
 	
-	function another_page() // just for sample
+	function chatroom_area()
 	{
-		echo 'good. you\'re logged in.';
+		$this->load->view('chatroom');
 	}
 	
 	function is_logged_in()

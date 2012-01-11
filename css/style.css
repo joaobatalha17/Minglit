@@ -12,6 +12,15 @@ body {
 	padding: 1em;
 	-moz-border-radius: 3px;
 }
+
+#questions_form {
+	width: 350px;
+	background: #f0f0f0 url(../img/login_bg.jpg) repeat-x 0 0;
+	border: 1px solid white;
+	margin: 250px auto 0;
+	padding: 1em;
+	-moz-border-radius: 3px;
+}
 h1,h2,h3,h4,h5 {
 	margin-top: 0;
 	font-family: arial black, arial;

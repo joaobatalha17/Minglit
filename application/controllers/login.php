@@ -16,13 +16,13 @@ class Login extends CI_Controller {
 		if($query) // if the user's credentials validated...  $this->membership_model->validate(); returned true
 		{
 			$data = array(
-				'username' => $this->input->post('username'),
+				'email_address' => $this->input->post('email_address'),
 				'is_logged_in' => true
 			);
 			$this->session->set_userdata($data);
 			redirect('site/members_area');
 		}
-		else // incorrect username or password
+		else // incorrect email or password
 		{
 			$this->index(); // load login form again
 		}
@@ -42,7 +42,6 @@ class Login extends CI_Controller {
 		$this->form_validation->set_rules('first_name', 'Name', 'trim|required');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
 		$this->form_validation->set_rules('email_address', 'Email Address', 'trim|required|valid_email');
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[4]');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[4]|max_length[32]');
 		$this->form_validation->set_rules('password2', 'Password Confirmation', 'trim|required|matches[password]');
 		

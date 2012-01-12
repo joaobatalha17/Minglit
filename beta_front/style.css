@@ -94,7 +94,7 @@ body{
 	color:black;
 }
 
-div > .question_input{
+.question_input{
 	border-width: 0;
     color: black;
     cursor: pointer;
@@ -244,7 +244,7 @@ div > .question_input{
 	border:3px solid black;
 }
 
-#question_form > .question_input{
+.question_input{
 	border-width: 0;
     color: black;
     cursor: pointer;
@@ -264,7 +264,7 @@ div > .question_input{
 	background-color:#F4F4F4;
 }
 
-#question_form > .question_input:hover{
+.question_input:hover{
 	background-color:white;
 }
 
@@ -294,10 +294,12 @@ div > .question_input{
 }
 
 #landing_bar{
-	margin:0 auto;
+	margin:30px auto;
 	width:600px;
 	height:32px;
 	font-size:34;
+	padding-bottom:10px;
+	/*border-bottom: 2px solid lightgray;
 	/*border:2px solid black;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
@@ -306,8 +308,7 @@ div > .question_input{
 
 #option_content{
 	margin:24px auto 0;
-	width:600px;
-	height:300px;
+	width:750px;
 	font-size:24;
 	/*border:2px solid black;
 	/*-moz-border-radius:10px;
@@ -317,8 +318,31 @@ div > .question_input{
 	text-align:left;
 }
 
+#selector{
+	width:208px;
+	/*border: 1px solid green;*/
+	float:left;
+	padding:0;
+	margin:0 0;
+	height:190px;
+	margin-top:5px;
+}
+
+#selector_info{
+	width: 538px;
+	/*border: 1px solid blue;*/
+	float: left;
+	padding:0;
+	margin: 0 0;
+	height:190px;
+	margin-top:5px;
+}
+
 ul {
 	list-style-type:none;
+	text-indent:0em;
+	padding:0;
+	margin:0 0;
 }
 
 .landing_option{
@@ -327,3 +351,12 @@ ul {
 	float:left;
 }
 
+#follow_bar{
+	width:500;
+	margin:2px auto;
+	/*border:1px solid purple;*/
+}
+
+#interactive_wrapper{
+	height:240px;
+}

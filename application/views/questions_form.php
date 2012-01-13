@@ -1,17 +1,41 @@
-<?php $this->load->view('includes/header'); ?>
-
-<div id="questions_form"><!-- Same CSS as login form-->
-
-	<h1>Questions</h1>
-    <?php 
-	echo form_open('game/enter_chatroom');
- 	echo "What is a fun activity you did last summer?" .  form_input('answer1', 'Answer');
-	echo "How many siblings do you have?" . form_input('answer2', 'Answer');
-	echo "What is your favorite color?" . form_input('answer3', 'Answer');
-	echo form_submit('submit', "Let's Play !");
-	echo form_close();
-	?>
-
-</div>
+<html>
+<head>
+	<title> Minglit </title>
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+	<script language=JavaScript src="jQuery.js"></script>
+	<script>
+		function connect(){
+			$("p").hide();
+			$(".question_input").hide();
+			$(".mingleButton").hide();
+			$("#question_form").hide();
+			//prints Connecting ... until server sends user to game_room.php
+			$("#main").append("<p id='wait'> Connecting . . .</p>");
+		}
+		
+		function brighten(source){
+			$(source).css("background-color","white");
+		}
+	</script>
+</head>
+<body>
+	<div id="question_wrapper">
+		<div id="main">
+			<div id="login_logo">
+				<img src="logo.png">
+			</div>
+			<form id="question_form">
+				 <p>What is a fun activity you did last summer?</p>
+					<input id="question1" class="question_input" type="text" name="response1" onclick="brighten('#question1')">
+				 <p>How many siblings do you have?</p>
+					<input id="question2" class="question_input" type="text" name="response2" onclick="brighten('#question2')"> 
+				 <p>What is your favorite color?</p>
+					<input id="question3" class="question_input" type="text" name="response3" onclick="brighten('#question3')">
+				<div id="question_button_wrapper"><a href="#" class="mingleButton" onclick="connect()">Mingle >>></a></div>
+				<!Need to post these via ajax to database when button is pressed>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
 	
-<?php $this->load->view('includes/footer'); ?>

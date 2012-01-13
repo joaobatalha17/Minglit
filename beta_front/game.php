@@ -13,7 +13,77 @@
 	    $session = $apiObj->create_session($_SERVER["REMOTE_ADDR"]);
 	    $sessionId = $session->getSessionId();
 	?>
-	<script src="game.js" type="text/javascript" charset="utf-8"></script>
+	<script src="game_video.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		//--------------------------------------
+		//  Game Code
+		//--------------------------------------
+		
+			/*
+			** Enforces that only one button A,B,C,D may be selected (blue) at a time.
+			*/	
+			
+			var previous_selected ='';	
+			
+			function playerSelected (player){
+				if (previous_selected == ''){	
+						$("#"+player).removeClass("mingleButton");
+						$("#"+player).addClass("mingleButton_active");
+						previous_selected = player;
+				}
+				else{
+					$("#"+previous_selected).removeClass("mingleButton_active");
+					$("#"+previous_selected).addClass("mingleButton");
+					$("#"+player).removeClass("mingleButton");
+					$("#"+player).addClass("mingleButton_active");
+					previous_selected = player;
+				}
+			}
+			
+			/*
+			** Game Timer
+			*/	
+			
+			var secs
+			var timerID = null;
+			var timerRunning = false;
+			var delay = 1000;
+
+			function InitializeTimer()
+			{
+			    // Set the length of the timer, in seconds
+			    secs = 45
+			    StopTheClock()
+			    StartTheTimer()
+			}
+
+			function StopTheClock()
+			{
+			    if(timerRunning)
+			        clearTimeout(timerID)
+			    timerRunning = false
+			}
+
+			function StartTheTimer()
+			{
+			    if (secs==0)
+			    {
+			        StopTheClock()
+			        // Timer complete
+			        alert("You have just completed one game.")
+			    }
+			    else
+			    {
+			        self.status = secs
+			        secs = secs - 1
+					$("#timer").text("Time: "+secs.toString()+" seconds")
+			        timerRunning = true
+			        timerID = self.setTimeout("StartTheTimer()", delay)
+			    }
+			}
+			//need to start once there are 4 streams in the session
+			InitializeTimer();
+	</script>
 </head>
 
 <body style="background-color:lightgray;">
@@ -29,10 +99,12 @@
 				<div id="vid4" class="video"></div>
 			</div>
 			<div id="label_container">
-				<div id="label_button_wrapper"><a href="#" class="mingleButton">&nbsp &nbsp &nbsp A &nbsp &nbsp &nbsp</a> </div>
-				<div id="label_button_wrapper"><a href="#" class="mingleButton">&nbsp &nbsp &nbsp B &nbsp &nbsp &nbsp</a> </div>
-				<div id="label_button_wrapper"><a href="#" class="mingleButton">&nbsp &nbsp &nbsp C &nbsp &nbsp &nbsp</a> </div>
-				<div id="label_button_wrapper"><a href="#" class="mingleButton">&nbsp &nbsp &nbsp D &nbsp &nbsp &nbsp</a> </div>
+				<div id="label_button_wrapper"><a href="#" class="mingleButton" id="A" onclick="playerSelected('A')"> A </a> </div>
+				<div id="label_button_wrapper"><a href="#" class="mingleButton" id="B" onclick="playerSelected('B')"> B </a> </div>
+				<div id="label_button_wrapper"><a href="#" class="mingleButton" id="C" onclick="playerSelected('C')"> C </a> </div>
+				<div id="label_button_wrapper"><a href="#" class="mingleButton" id="D" onclick="playerSelected('D')"> D </a> </div>
+			</div>
+			<div id="timer" style="font-size:24;">
 			</div>                                                                   
 		</div>
 		

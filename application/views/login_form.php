@@ -19,11 +19,13 @@
 			$("#signUp_form").append("<div> Password: <input class='question_input' type='password' name='password1'></div>");
 			$("#signUp_form").append("<div> Password Check:<input class='question_input' type='password' name='password2'></div>");
 			$("#signUp_form").append("<a href='#' class='mingleButton'> Create Account </a>");
-			
-			//add the ajax request for when Create Account is pressed
 		}
 	</script>
-	
+	<script>
+		/*will send get request to server new user sign up info
+		if it is good then redirect to signin page with successful signup alert
+		if not good then alert with unsuccessful signup*/
+	</script>
 </head>
 <body>
 <div id="login_wrapper">
@@ -37,7 +39,7 @@
 				<input class="login_input" id="password" type="password" value="Password" name="password" onclick="clearValue('#password')">
 				
 				<!when this button is pressed you need to authenticate (via ajax post) user and if not in our database return him to landing>
-				<a href="#" class="mingleButton" onclick="window.location = 'question.php';">Mingle >>></a>
+				<a href="#" class="mingleButton" onclick="window.location = 'question_form.php';">Mingle >>></a>
 			</form>
 			<!I don't have anything made for new user signup yet, but will get on it asap'>
 			New User? <a href="#" class="mingleButton" onclick="signUp()"> Sign Up</a>

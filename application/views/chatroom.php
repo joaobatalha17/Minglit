@@ -5,6 +5,7 @@
 	<title>Game</title>
 </head>
 <body>
-	<h2>Welcome to the game!</h2>
+	<pre><?php print_r($users); ?></pre> <br /> 
+	<?php echo $count; ?>
 </body>
 </html>

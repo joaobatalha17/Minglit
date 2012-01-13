@@ -1,3 +1,8 @@
+//--------------------------------------
+//  Video Code
+//--------------------------------------
+
+
 //requires php
 var apiKey = <?php print API_Config::API_KEY?>;
 var sessionId = '153975e9d3ecce1d11baddd2c9d8d3c9d147df18';//'<?php print $sessionId; ?>';
@@ -21,9 +26,6 @@ if (TB.checkSystemRequirements() != TB.HAS_REQUIREMENTS) {
 	connect();
 }
 
-//--------------------------------------
-//  Connection and Publishingz HANDLERS
-//--------------------------------------
 
 function connect() {
 	//Connect to session
@@ -42,10 +44,6 @@ function startPublishing() {
 	}
 }
 
-
-//--------------------------------------
-//  OPENTOK EVENT HANDLERS
-//--------------------------------------
 
 function sessionConnectedHandler(event) {
 	startPublishing();

@@ -50,7 +50,7 @@ class Chatroom_model extends CI_Model {
         	                 );
         	    $this->db->where('id' , $arr['id'] );
         	    $result = $this->db->update('chatrooms', $data);
-        	    return $result;
+        	    return $result; 
 		        
 		    }
 		}

@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title> Minglit </title>
+	<title> Minglit: Questions </title>
 	<link rel="stylesheet" href="<?php echo base_url();?>/css/style.css" type="text/css" media="screen">
 	<script language=JavaScript src="<?php echo base_url();?>/javascript/jQuery.js"></script>
 	<script>
@@ -9,6 +9,11 @@
 			$(".question_input").hide();
 			$(".mingleButton").hide();
 			$("#question_form").hide();
+			$.post(
+				"<?php base_url();?>"+/*some_extension*/,
+				{activity: $("#question1").val(), siblings: $("#question2").val(), color: $("#question3").val()}
+			);
+			
 			//prints Connecting ... until server sends user to game_room.php
 			$("#main").append("<p id='wait'> Connecting . . .</p>");
 		}
@@ -16,6 +21,10 @@
 		function brighten(source){
 			$(source).css("background-color","white");
 		}
+	</script>
+	<script>
+	
+	
 	</script>
 </head>
 <body>
@@ -32,7 +41,6 @@
 				 <p>What is your favorite color?</p>
 					<input id="question3" class="question_input" type="text" name="response3" onclick="brighten('#question3')">
 				<div id="question_button_wrapper"><a href="#" class="mingleButton" onclick="connect()">Mingle >>></a></div>
-				<!Need to post these via ajax to database when button is pressed and begin user management process>
 			</form>
 		</div>
 	</div>

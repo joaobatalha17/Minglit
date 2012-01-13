@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title> Minglit </title>
+	<title> Minglit: Start </title>
 	<link rel="stylesheet" href="<?php echo base_url();?>/css/style.css" type="text/css" media="screen">
 	<script language=JavaScript src="<?php echo base_url();?>/javascript/jQuery.js"></script> 
 	<script>
@@ -11,20 +11,56 @@
 			$(source).css("background-color","white");
 		}
 		
-		function signUp(){
+		function make_signup(){
 			$("#login_panel").text("");
 			$("#login_panel").append("<form id='signUp_form'> </form>");
-			$("signUp_form").append("<div> First Name: <input class='question_input' type='firstname' name='firstname'></div>");a
-			$("#signUp_form").append("<div> Email Address: <input class='question_input' type='email' name='email'></div>");
-			$("#signUp_form").append("<div> Password: <input class='question_input' type='password' name='password1'></div>");
-			$("#signUp_form").append("<div> Password Check:<input class='question_input' type='password' name='password2'></div>");
-			$("#signUp_form").append("<a href='#' class='mingleButton'> Create Account </a>");
+			$("signUp_form").append("<div> First Name: <input id='firstname' class='question_input'></div>");
+			$("signUp_form").append("<div> Last Name: <input id='lastname' class='question_input'></div>");
+			$("#signUp_form").append("<div> Email Address: <input id='email' class='question_input'></div>");
+			$("#signUp_form").append("<div> Password: <input id='psswd1' class='question_input'></div>");
+			$("#signUp_form").append("<div> Password Check:<input id='psswd2' class='question_input'></div>");
+			$("#signUp_form").append("<a href='#' class='mingleButton' onclick='create_account();'> Create Account </a>");
 		}
 	</script>
 	<script>
-		/*will send get request to server new user sign up info
+		/*will send get request to server with new user sign up info
 		if it is good then redirect to signin page with successful signup alert
 		if not good then alert with unsuccessful signup*/
+		
+		function create_account(){
+			$.post(
+				"<?php base_url();?>"+/*some_extension*/,
+				{firstname: $("#firstname").val(), lastname: $("#lastname").val(), email: $("#email").val(),psswd1: $("#psswd1").val(), psswd2: $("#psswd2").val()},
+				function (data){
+					if (data = "success"){
+						alert("Sign in was successful! Enjoy!")
+						window.location = 'login_form.php';
+					}
+					else{
+						alert("Unsuccessful signup, please fill in all fields and try again.")
+					}
+				}
+			);
+		}
+		
+		/*will send get request to server with login info
+		if it is good then redirect to question_form.php
+		if not good then alert with unsuccessful signup*/
+		
+		function login(){
+			$.post(
+				"<?php base_url();?>"+/*some_extension*/,
+				{email: $("#email").val(), password: $("#password").val()},
+				function (data){
+					if (data = "success"){
+						window.location = 'question_form.php';
+					}
+					else{
+						alert("Unsuccessful login.")
+					}
+				}
+			);
+		}
 	</script>
 </head>
 <body>
@@ -39,10 +75,9 @@
 				<input class="login_input" id="password" type="password" value="Password" name="password" onclick="clearValue('#password')">
 				
 				<!when this button is pressed you need to authenticate (via ajax post) user and if not in our database return him to landing>
-				<a href="#" class="mingleButton" onclick="window.location = 'question_form.php';">Mingle >>></a>
+				<a href="#" class="mingleButton" onclick="login();">Mingle >>></a>
 			</form>
-			<!I don't have anything made for new user signup yet, but will get on it asap'>
-			New User? <a href="#" class="mingleButton" onclick="signUp()"> Sign Up</a>
+			New User? <a href="#" class="mingleButton" onclick="make_signup()"> Sign Up</a>
 		</div>
 	</div>
 </div>

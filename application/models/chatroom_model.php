@@ -1,7 +1,7 @@
 <?php
 class Chatroom_model extends CI_Model {
     
-    
+    var $size = 4;
     var $status = 'FILLING';
     var $usercount = 0;
     var $tokboxID = 0;
@@ -36,12 +36,23 @@ class Chatroom_model extends CI_Model {
 		{
 		    $row = $query->row();
 		    $count = $row->usercount;
-			$data = array('user_'. $count => $arr['email_address'],
-    	                  'usercount' => $row->usercount + 1    
-    	                 );
-    	    $this->db->where('id' , $arr['id'] );
-    	    $result = $this->db->update('chatrooms', $data);
-    	    return $result;
+		    if($count + 1 == $this->size){
+		        $data = array('user_'. $count => $arr['email_address'],
+        	                  'usercount' => $row->usercount + 1,
+        	                  'status' => 'FULL'    
+        	                 );
+        	    $this->db->where('id' , $arr['id'] );
+        	    $result = $this->db->update('chatrooms', $data);
+        	    return $result;
+		    } else {
+		        $data = array('user_'. $count => $arr['email_address'],
+        	                  'usercount' => $row->usercount + 1    
+        	                 );
+        	    $this->db->where('id' , $arr['id'] );
+        	    $result = $this->db->update('chatrooms', $data);
+        	    return $result;
+		        
+		    }
 		}
 
 	    

@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost:8888/Mfront/Minglit/';
+$config['base_url']	= 'http://localhost:8888/Minglit/';
 
 /*
 |--------------------------------------------------------------------------

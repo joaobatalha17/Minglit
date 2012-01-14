@@ -12,29 +12,20 @@
 		}
 		
 	</script>
-	<script>
-		//will post login input to back end		
-		function login(){
-			$.post(
-				"<?php base_url();?>"+/*EXTENTION SHOULD BE -> "/login/validate_credentials"  */,
-				{email_address: $("#email").val(), password: $("#password").val()}
-			);
-		}
-	</script>
 </head>
 <body>
 <div id="login_wrapper">
 	<div id="main">
 		<div id="login_logo">
-			<img src="<?php echo base_url();?>/img/logo.png">
+			<img src="<?php echo base_url() . '/img/logo.png';?>" />
 		</div>
 		<div id="login_panel">
-			<form id="login_form" ><form method="post" accept-charset="utf-8" action="http:/example.com/index.php/login/validate_credentials" />
-				<input class="login_input" id="email" type="text" value="Email Address" name="email" onclick="clearValue('#email')">
-				<input class="login_input" id="password" type="password" value="Password" name="password" onclick="clearValue('#password')">
-				<a href="http://example.com/index.php/yourextension/login/signup" class="mingleButton">Mingle >>></a>
+			<form id="login_form" method="post" accept-charset="utf-8" action="<?php base_url() . '/index.php/login/validate_credentials'; ?>" >
+				<input class="login_input" id="email" type="text" value="Email Address" name="email_address" onclick="clearValue('#email')"/>
+				<input class="login_input" id="password" type="password" value="Password" name="password" onclick="clearValue('#password')"/>
+				<input type="submit" name="submit" value="Mingle>>>" class="mingleButton"/>
 			</form>
-			New User? <a href="#" class="mingleButton" onclick="window.location='signup_form.php"> Sign Up</a>
+			New User? <a href="<?php base_url() . '/index.php/login/signup'; ?>" class="mingleButton">Sign Up</a>
 		</div>
 	</div>
 </div>

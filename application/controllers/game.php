@@ -15,7 +15,7 @@ class Game extends CI_Controller {
 	}
 	
 	function submit_questions(){		
-		redirect('site/chatroom_area');
+		$this->load->view('game_room');
 	}	
 	
 	function create_chatroom(){		

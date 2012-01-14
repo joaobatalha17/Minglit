@@ -22,7 +22,7 @@ body{
 }
 
 #signup_labels > div{
-	padding:22px 0 0;
+	padding:12px 0 0;
 }
 
 #signup_box{
@@ -31,7 +31,7 @@ body{
 	width: 600px;
 	height:345px;
 	padding: 25px;
-	font-size: 24;
+	font-size: 24pt;
 	background:lightgray;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;

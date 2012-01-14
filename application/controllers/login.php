@@ -4,8 +4,7 @@ class Login extends CI_Controller {
 	
 	function index()
 	{
-		$data['main_content'] = 'login_form';
-		$this->load->view('includes/template', $data);		
+		$this->load->view('login_form');		
 	}
 	
 	function validate_credentials()
@@ -30,8 +29,7 @@ class Login extends CI_Controller {
 	
 	function signup()
 	{
-		$data['main_content'] = 'signup_form';
-		$this->load->view('includes/template', $data);
+		$this->load->view('signup_form');
 	}
 	
 	function create_member()

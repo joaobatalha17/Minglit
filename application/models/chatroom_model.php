@@ -1,7 +1,6 @@
 <?php
 class Chatroom_model extends CI_Model {
     
-    var $size = 4;
     var $status = 'FILLING';
     var $usercount = 0;
     var $tokboxID = 0;
@@ -10,10 +9,10 @@ class Chatroom_model extends CI_Model {
     var $user_2 = '';
     var $user_3 = '';
     
-    var $question_0 = '';
-    var $question_1 = '';
-    var $question_2 = '';
-    var $question_in_use = '';
+    //var $question_0 = '';
+    //var $question_1 = '';
+    //var $question_2 = '';
+    //var $question_in_use = '';
     function __construct()
     {
         // Call the Model constructor
@@ -23,7 +22,7 @@ class Chatroom_model extends CI_Model {
 	function create_chatroom()
 	{
 		$insert = $this->db->insert('chatrooms', $this);
-		return $insert->result();
+		return $insert;
 	}
 	
 	function get_current_chatroom(){
@@ -40,7 +39,7 @@ class Chatroom_model extends CI_Model {
 		{
 		    $row = $query->row();
 		    $count = $row->usercount;
-		    if($count + 1 == $this->size){
+		    if($count + 1 == 4){
 		        $data = array('user_'. $count => $arr['email_address'],
         	                  'usercount' => $row->usercount + 1,
         	                  'status' => 'FULL'    

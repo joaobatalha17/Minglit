@@ -10,6 +10,10 @@ class Chatroom_model extends CI_Model {
     var $user_2 = '';
     var $user_3 = '';
     
+    var $question_0 = '';
+    var $question_1 = '';
+    var $question_2 = '';
+    var $question_in_use = '';
     function __construct()
     {
         // Call the Model constructor
@@ -19,7 +23,7 @@ class Chatroom_model extends CI_Model {
 	function create_chatroom()
 	{
 		$insert = $this->db->insert('chatrooms', $this);
-		return $insert;
+		return $insert->result();
 	}
 	
 	function get_current_chatroom(){

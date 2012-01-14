@@ -10,6 +10,10 @@ class Chatroom_model extends CI_Model {
     var $user_2 = '';
     var $user_3 = '';
     
+    var $question_0 = '';
+    var $question_1 = '';
+    var $question_2 = '';
+    var $question_in_use = '';
     function __construct()
     {
         // Call the Model constructor

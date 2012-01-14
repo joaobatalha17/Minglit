@@ -3,11 +3,11 @@
 	<title> Minglit: Game </title>
 	<link rel="stylesheet" href="<?php echo base_url();?>/css/style.css" type="text/css" media="screen">
 	<script language=JavaScript src="<?php echo base_url();?>/javascript/jQuery.js"></script>
-	<script src="http://staging.tokbox.com/v0.91/js/TB.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="<?php base_url(); ?>/javascript/TB.min.js" type="text/javascript" charset="utf-8"></script>
 	<?php
-	    require_once base_url().'/tokbox_SDK/API_Config.php';
-	    require_once base_url().'/tokbox_SDK/OpenTokSDK.php';
-	    require_once base_url().'/tokbox_SDK/SessionPropertyConstants.php';
+	    require_once base_url().'/application/tokbox_SDK/API_Config.php';
+	    require_once base_url().'/application/tokbox_SDK/OpenTokSDK.php';
+	    require_once base_url().'/application/tokbox_SDK/SessionPropertyConstants.php';
 
 	    $apiObj = new OpenTokSDK(API_Config::API_KEY, API_Config::API_SECRET);
 	    $session = $apiObj->create_session($_SERVER["REMOTE_ADDR"]);

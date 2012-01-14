@@ -73,8 +73,6 @@
 			<form id="login_form">
 				<input class="login_input" id="email" type="text" value="Email Address" name="email" onclick="clearValue('#email')">
 				<input class="login_input" id="password" type="password" value="Password" name="password" onclick="clearValue('#password')">
-				
-				<!when this button is pressed you need to authenticate (via ajax post) user and if not in our database return him to landing>
 				<a href="#" class="mingleButton" onclick="login();">Mingle >>></a>
 			</form>
 			New User? <a href="#" class="mingleButton" onclick="make_signup()"> Sign Up</a>

@@ -3,6 +3,15 @@
 	<title> Minglit: Sign Up </title>
 	<link rel="stylesheet" href="<?php echo base_url();?>/css/style.css" type="text/css" media="screen">
 	<script language=JavaScript src="<?php echo base_url();?>/application/javascript/jQuery.js"></script>
+	<script>
+		//posts new user data to back end
+		function create_account(){
+			$.post(
+				"<?php base_url();?>"/*some extention*/,
+				{firstname: $("#firstname").val(), lastname: $("#lastname").val(), email: $("#email").val(),psswd1: $("#psswd1").val(), psswd2: $("#psswd2").val()}
+			);
+		}
+	</script>
 </head>
 <body>
 <div id="login_wrapper">

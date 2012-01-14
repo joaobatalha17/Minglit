@@ -2,7 +2,7 @@
 <head>
 	<title> Minglit: Start </title>
 	<link rel="stylesheet" href="<?php echo base_url();?>/css/style.css" type="text/css" media="screen">
-	<script language=JavaScript src="<?php echo base_url();?>/javascript/jQuery.js"></script> 
+	<script language=JavaScript src="<?php echo base_url();?>/application/javascript/jQuery.js"></script> 
 	<script>
 	
 		function clearValue(source){
@@ -14,8 +14,8 @@
 		function make_signup(){
 			$("#login_panel").text("");
 			$("#login_panel").append("<form id='signUp_form'> </form>");
-			$("signUp_form").append("<div> First Name: <input id='firstname' class='question_input'></div>");
-			$("signUp_form").append("<div> Last Name: <input id='lastname' class='question_input'></div>");
+			$("#signUp_form").append("<div> First Name: <input id='firstname' class='question_input'></div>");
+			$("#signUp_form").append("<div> Last Name: <input id='lastname' class='question_input'></div>");
 			$("#signUp_form").append("<div> Email Address: <input id='email' class='question_input'></div>");
 			$("#signUp_form").append("<div> Password: <input id='psswd1' class='question_input'></div>");
 			$("#signUp_form").append("<div> Password Check:<input id='psswd2' class='question_input'></div>");
@@ -29,7 +29,7 @@
 		
 		function create_account(){
 			$.post(
-				"<?php base_url();?>"+/*some_extension*/,
+				"<?php base_url();?>"/*some extention*/,
 				{firstname: $("#firstname").val(), lastname: $("#lastname").val(), email: $("#email").val(),psswd1: $("#psswd1").val(), psswd2: $("#psswd2").val()},
 				function (data){
 					if (data = "success"){
@@ -49,8 +49,8 @@
 		
 		function login(){
 			$.post(
-				"<?php base_url();?>"+/*some_extension*/,
-				{email: $("#email").val(), password: $("#password").val()},
+				"<?php base_url();?>"+/*EXTENTION SHOULD BE -> "/login/validate_credentials"  */,
+				{email_address: $("#email").val(), password: $("#password").val()},
 				function (data){
 					if (data = "success"){
 						window.location = 'question_form.php';

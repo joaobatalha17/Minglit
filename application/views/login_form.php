@@ -11,16 +11,6 @@
 			$(source).css("background-color","white");
 		}
 		
-		function make_signup(){
-			$("#login_panel").text("");
-			$("#login_panel").append("<form id='signUp_form'> </form>");
-			$("#signUp_form").append("<div> First Name: <input id='firstname' class='question_input'></div>");
-			$("#signUp_form").append("<div> Last Name: <input id='lastname' class='question_input'></div>");
-			$("#signUp_form").append("<div> Email Address: <input id='email' class='question_input'></div>");
-			$("#signUp_form").append("<div> Password: <input id='psswd1' class='question_input'></div>");
-			$("#signUp_form").append("<div> Password Check:<input id='psswd2' class='question_input'></div>");
-			$("#signUp_form").append("<a href='#' class='mingleButton' onclick='create_account();'> Create Account </a>");
-		}
 	</script>
 	<script>
 		/*will send get request to server with new user sign up info

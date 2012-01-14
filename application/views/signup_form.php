@@ -1,8 +1,8 @@
 <html>
 <head>
 	<title> Minglit: Sign Up </title>
-	<link rel="stylesheet" href="<?php echo base_url();?>/css/style.css" type="text/css" media="screen">
-	<script language=JavaScript src="<?php echo base_url();?>/application/javascript/jQuery.js"></script>
+	<link rel="stylesheet" href="<?php echo base_url();?>css/style.css" type="text/css" media="screen">
+	<script language=JavaScript src="<?php echo base_url();?>application/javascript/jQuery.js"></script>
 	<script>
 	
 		function clearValue(source){
@@ -17,7 +17,7 @@
 <div id="login_wrapper">
 	<div id="main">
 		<div id="login_logo">
-			<img src="<?php echo base_url();?>/img/logo.png"/>
+			<img src="<?php echo base_url();?>img/logo.png"/>
 		</div>
 		<div id="signup_box">
 			<div id="signup_labels">
@@ -27,7 +27,7 @@
 				<div>Password: </div>
 				<div>Confirm Password: </div>
 			</div>
-				<form id='signUp_form'  method="post" accept-charset="utf-8" action="<?php base_url() . '/index.php/login/create_member'; ?>" > 
+				<form id='signUp_form'  method="post" accept-charset="utf-8" action="<?php echo base_url() . 'index.php/login/create_member'; ?>" > 
 					<input id='firstname' class='question_input' name="first_name" onclick="clearValue('#firstname')"/>
 					<input id='lastname' class='question_input' name="last_name" onclick="clearValue('#lastname')"/>
 					<input id='email' class='question_input' name="email_address" onclick="clearValue('#email')"/>

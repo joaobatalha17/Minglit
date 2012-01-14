@@ -1,8 +1,8 @@
 <html>
 <head>
 	<title> Minglit: Questions </title>
-	<link rel="stylesheet" href="<?php echo base_url();?>/css/style.css" type="text/css" media="screen">
-	<script language=JavaScript src="<?php echo base_url();?>/javascript/jQuery.js"></script>
+	<link rel="stylesheet" href="<?php echo base_url();?>css/style.css" type="text/css" media="screen">
+	<script language=JavaScript src="<?php echo base_url();?>javascript/jQuery.js"></script>
 	<script>
 		function connect(){
 			$("p").hide();
@@ -24,9 +24,9 @@
 	<div id="question_wrapper">
 		<div id="main">
 			<div id="login_logo">
-				<img src="<?php echo base_url() . '/img/logo.png';?>" />
+				<img src="<?php echo base_url() . 'img/logo.png';?>" />
 			</div>
-			<form id="question_form" method="post" accept-charset="utf-8" action="<?php base_url() . '/index.php/game/enter_chatroom'; ?>">
+			<form id="question_form" method="post" accept-charset="utf-8" action="<?php echo base_url() . 'index.php/game/enter_chatroom'; ?>">
 				 <p>What is a fun activity you did last summer?</p>
 					<input id="question1" class="question_input" type="text" name="answer1" onclick="clearValue('#question1')" />
 				 <p>How many siblings do you have?</p>

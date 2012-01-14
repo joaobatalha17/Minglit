@@ -13,25 +13,24 @@ body{
 */
 
 /*Some of style is from login_form.php*/
-
 #signup_labels{
 	padding:0;
 	float:left;
-	width: 250px;
+	width: 280px;
 	height:350px;
 }
 
 #signup_labels > div{
-	padding:22px 0 0;
+	padding:12px 0 3px;
 }
 
 #signup_box{
 	padding: 5px 0 0;
 	margin:0 auto 0;
-	width: 600px;
+	width: 630px;
 	height:345px;
 	padding: 25px;
-	font-size: 24;
+	font-size: 24pt;
 	background:lightgray;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
@@ -46,7 +45,6 @@ body{
 	width: 350px;
 	height:350px;
 }
-
 /*
 ** Style Elements for game_room.php
 */

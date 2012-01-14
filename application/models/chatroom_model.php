@@ -19,7 +19,7 @@ class Chatroom_model extends CI_Model {
 	function create_chatroom()
 	{
 		$insert = $this->db->insert('chatrooms', $this);
-		return $insert;
+		return $insert->result();
 	}
 	
 	function get_current_chatroom(){

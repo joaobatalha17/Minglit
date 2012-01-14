@@ -2,7 +2,7 @@
 <head>
 	<title> Minglit: Sign Up </title>
 	<link rel="stylesheet" href="<?php echo base_url();?>css/style.css" type="text/css" media="screen">
-	<script language=JavaScript src="<?php echo base_url();?>application/javascript/jQuery.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
 	<script>
 	
 		function clearValue(source){

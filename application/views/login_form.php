@@ -29,10 +29,10 @@
 			<img src="<?php echo base_url();?>/img/logo.png">
 		</div>
 		<div id="login_panel">
-			<form id="login_form">
+			<form id="login_form" ><form method="post" accept-charset="utf-8" action="http:/example.com/index.php/login/validate_credentials" />
 				<input class="login_input" id="email" type="text" value="Email Address" name="email" onclick="clearValue('#email')">
 				<input class="login_input" id="password" type="password" value="Password" name="password" onclick="clearValue('#password')">
-				<a href="#" class="mingleButton" onclick="login();">Mingle >>></a>
+				<a href="http://example.com/index.php/yourextension/login/signup" class="mingleButton">Mingle >>></a>
 			</form>
 			New User? <a href="#" class="mingleButton" onclick="window.location='signup_form.php"> Sign Up</a>
 		</div>

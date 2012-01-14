@@ -27,6 +27,7 @@
 				<img src="<?php echo base_url() . 'img/logo.png';?>" />
 			</div>
 			<form id="question_form" method="post" accept-charset="utf-8" action="<?php echo base_url() . 'index.php/game/submit_questions'; ?>">
+
 				 <p>What is a fun activity you did last summer?</p>
 					<input id="question1" class="question_input" type="text" name="answer1" onclick="clearValue('#question1')" />
 				 <p>How many siblings do you have?</p>

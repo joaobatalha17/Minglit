@@ -23,175 +23,205 @@
         var sessionId = '153975e9d3ecce1d11baddd2c9d8d3c9d147df18';//'<?php print $sessionId; ?>';
         var token = 'devtoken';//'<?php print $apiObj->generate_token($sessionId); ?>';
 
-        var session;
-        var publisher;
-        var subscribers = {};
+  		        var session;
+		        var publisher;
+		        var subscribers = {};
 
-        if (TB.checkSystemRequirements() != TB.HAS_REQUIREMENTS) {
-        	alert("You don't have the minimum requirements to run this application."
-        		  + "Please upgrade to the latest version of Flash.");
-        } else {
-        	session = TB.initSession(sessionId);	// Initialize session
+				var stream_count = 0;
 
-        	// Add event listeners to the session
-        	session.addEventListener('sessionConnected', sessionConnectedHandler);
-        	session.addEventListener('streamCreated', streamCreatedHandler);
-        	session.addEventListener('streamDestroyed', streamDestroyedHandler);
+		        if (TB.checkSystemRequirements() != TB.HAS_REQUIREMENTS) {
+		        	alert("You don't have the minimum requirements to run this application."
+		        		  + "Please upgrade to the latest version of Flash.");
+		        } else {
+		        	session = TB.initSession(sessionId);	// Initialize session
 
-        	connect();
-        }
+		        	// Add event listeners to the session
+		        	session.addEventListener('sessionConnected', sessionConnectedHandler);
+		        	session.addEventListener('streamCreated', streamCreatedHandler);
+		        	session.addEventListener('streamDestroyed', streamDestroyedHandler);
 
-
-        function connect() {
-        	//Connect to session
-        	session.connect(apiKey, token);
-        }
-
-        // For user to start publishing to the session
-        function startPublishing() {
-        	if (!publisher) {
-        		var parentDiv = document.getElementById("vid1");
-        		var publisherDiv = document.createElement('div'); // Create a div for the publisher to replace
-        		var publisherProps = {width: 299, height: 224, subscribeToAudio: true};
-        		publisherDiv.setAttribute('id', 'flash_video');
-        		parentDiv.appendChild(publisherDiv);
-        		publisher = session.publish(publisherDiv.id,publisherProps); // Pass the replacement div id to the publish method
-        	}
-        }
+		        	connect();
+		        }
 
 
-        function sessionConnectedHandler(event) {
-        	startPublishing();
-        	// Subscribe to all streams currently in the Session
-        	for (var i = 0; i < event.streams.length; i++) {
-        		addStream(event.streams[i]);
-        	}
-        }
+		        function connect() {
+		        	//Connect to session
+		        	session.connect(apiKey, token);
+		        }
 
-        function streamCreatedHandler(event) {
-        	// Subscribe to the newly created streams
-        	for (var i = 0; i < event.streams.length; i++) {
-        		addStream(event.streams[i]);
-        	}
-        }
+		        // For user to start publishing to the session
+		        function startPublishing() {
+		        	if (!publisher) {
+		        		var parentDiv = document.getElementById("vid1");
+		        		var publisherDiv = document.createElement('div'); // Create a div for the publisher to replace
+		        		var publisherProps = {width: 299, height: 224, subscribeToAudio: true};
+		        		publisherDiv.setAttribute('id', 'flash_video');
+		        		parentDiv.appendChild(publisherDiv);
+		        		publisher = session.publish(publisherDiv.id,publisherProps); // Pass the replacement div id to the publish method
+		        	}
+		        }
 
-        function streamDestroyedHandler(event){
-        	//eventually will end game if a stream is terminated
-        }
 
-        function addStream(stream) {
-        	// Check if this is the stream that I am publishing, and if so do not publish.
-        	if (stream.connection.connectionId == session.connection.connectionId) {
-        		return;
-        	}
-        	var divArray = new Array('vid2','vid3','vid4');
-        	var count = 0;
-        	while (document.getElementById(divArray[count]).hasChildNodes()){
-        		count += 1;
-        	}
-        	var subscriberDiv = document.createElement('div'); // Create a div for the subscriber to replace
-        	var parent = divArray[count];
-        	var subscriberProps = {width: 299, height: 224, subscribeToAudio: true};
-        	subscriberDiv.setAttribute('id', stream.streamId); // Give the replacement div the id of the stream as its id.
-        	document.getElementById(parent).appendChild(subscriberDiv);		
-        	subscribers[parent] = session.subscribe(stream, subscriberDiv.id, subscriberProps);
+		        function sessionConnectedHandler(event) {
+		        	startPublishing();
+		        	// Subscribe to all streams currently in the Session
+		        	for (var i = 0; i < event.streams.length; i++) {
+		        		addStream(event.streams[i]);
+		        	}
+		        }
 
-        }
-	
-	
-		//--------------------------------------
-		//  Game Code
-		//--------------------------------------
-		
-			/*
-			** Enforces that only one button A,B,C,D may be selected (blue) at a time.
-			*/	
-			
-			var previous_selected ='';	
-			
-			function playerSelected (player){
-				if (previous_selected == ''){	
-						$("#"+player).removeClass("mingleButton");
-						$("#"+player).addClass("mingleButton_active");
-						previous_selected = player;
-				}
-				else{
-					$("#"+previous_selected).removeClass("mingleButton_active");
-					$("#"+previous_selected).addClass("mingleButton");
-					$("#"+player).removeClass("mingleButton");
-					$("#"+player).addClass("mingleButton_active");
-					previous_selected = player;
-				}
-			}
-			
-			/*
-			** Game Timer
-			*/	
-			
-			var secs
-			var timerID = null;
-			var timerRunning = false;
-			var delay = 1000;
+		        function streamCreatedHandler(event) {
+		        	// Subscribe to the newly created streams
+		        	for (var i = 0; i < event.streams.length; i++) {
+		        		addStream(event.streams[i]);
+		        	}
+		        }
 
-			function InitializeTimer()
-			{
-			    // Set the length of the timer, in seconds
-			    secs = 45
-			    StopTheClock()
-			    StartTheTimer()
-			}
+		        function streamDestroyedHandler(event){
+		        	stream_count -= 1;
+		        }
 
-			function StopTheClock()
-			{
-			    if(timerRunning)
-			        clearTimeout(timerID)
-			    timerRunning = false
-			}
+		        function addStream(stream) {
+					stream_count += 1;
+					startRound()
+					$("#question_container").text(stream_count.toString());
+		        	// Check if this is the stream that I am publishing, and if so do not publish.
+		        	if (stream.connection.connectionId == session.connection.connectionId) {
+		        		return;
+		        	}
+		        	var divArray = new Array('vid2','vid3','vid4');
+		        	var count = 0;
+		        	while (document.getElementById(divArray[count]).hasChildNodes()){
+		        		count += 1;
+		        	}
+		        	var subscriberDiv = document.createElement('div'); // Create a div for the subscriber to replace
+		        	var parent = divArray[count];
+		        	var subscriberProps = {width: 299, height: 224, subscribeToAudio: true};
+		        	subscriberDiv.setAttribute('id', stream.streamId); // Give the replacement div the id of the stream as its id.
+		        	document.getElementById(parent).appendChild(subscriberDiv);		
+		        	subscribers[parent] = session.subscribe(stream, subscriberDiv.id, subscriberProps);
 
-			function StartTheTimer()
-			{
-			    if (secs==0)
-			    {
-			        StopTheClock()
-			        // Timer complete
-			        alert("You have just completed one game.")
-			    }
-			    else
-			    {
-			        self.status = secs
-			        secs = secs - 1
-					$("#timer").text("Time: "+secs.toString()+" seconds")
-			        timerRunning = true
-			        timerID = self.setTimeout("StartTheTimer()", delay)
-			    }
-			}
-			//need to start once there are 4 streams in the session
-			$(document).ready(function (){InitializeTimer();});
-	</script>
-</head>
+		        }
 
-<body style="background-color:lightgray;">
-	<div id="game_wrapper">
-		<div id="main">
-			<div id="question_container">
-					<h1> Who in this room skinny dipped last summer? </h1>
+
+				//--------------------------------------
+				//  Game Code
+				//--------------------------------------
+
+					/*
+					** Initiate Question and Timer once 4 active streams are in session
+					*/
+					function startRound(){
+						InitializeTimer();
+						getQuestion();
+					}
+
+					/* gets question and prints it on screen */
+					function getQuestion(){
+						$.post("<?php echo base_url() . 'login/give_question' ;?>",
+							{'item':"question"},
+							function(data){
+								$("#question_header").text(data.result);
+							},
+							'json'
+						);
+					}
+
+					/* gets answer to question and prints it on screen */
+					/*function getAnswer(){
+						$.post("<?php echo base_url() . 'login/give_question' ;?>",
+
+						);
+					}
+					*/
+
+
+					/*
+					** Enforces that only one button A,B,C,D may be selected (blue) at a time.
+					*/	
+
+					var previous_selected ='';	
+
+					function playerSelected (player){
+						if (previous_selected == ''){	
+								$("#"+player).removeClass("mingleButton");
+								$("#"+player).addClass("mingleButton_active");
+								previous_selected = player;
+						}
+						else{
+							$("#"+previous_selected).removeClass("mingleButton_active");
+							$("#"+previous_selected).addClass("mingleButton");
+							$("#"+player).removeClass("mingleButton");
+							$("#"+player).addClass("mingleButton_active");
+							previous_selected = player;
+						}
+					}
+
+					/*
+					** Game Timer
+					*/	
+
+					var secs
+					var timerID = null;
+					var timerRunning = false;
+					var delay = 1000;
+
+					function InitializeTimer()
+					{
+					    // Set the length of the timer, in seconds
+					    secs = 45
+					    StopTheClock()
+					    StartTheTimer()
+					}
+
+					function StopTheClock()
+					{
+					    if(timerRunning)
+					        clearTimeout(timerID)
+					    timerRunning = false
+					}
+
+					function StartTheTimer()
+					{
+					    if (secs==0)
+					    {
+					        StopTheClock()
+					        //getAnswer()
+					    }
+					    else
+					    {
+					        self.status = secs
+					        secs = secs - 1
+							$("#timer").text("Time: "+secs.toString()+" seconds")
+					        timerRunning = true
+					        timerID = self.setTimeout("StartTheTimer()", delay)
+					    }
+					}
+			</script>
+		</head>
+
+		<body style="background-color:lightgray;">
+			<div id="game_wrapper">
+				<div id="main">
+					<div id="question_container">
+							<h1 id="question_header"> Who in this room skinny dipped last summer? </h1>
+					</div>
+					<div id="video_container">
+						<div id="vid1" class="video"></div>
+						<div id="vid2" class="video"></div>
+						<div id="vid3" class="video"></div>
+						<div id="vid4" class="video"></div>
+					</div>
+					<div id="label_container">
+						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="A" onclick="playerSelected('A')"> A </a> </div>
+						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="B" onclick="playerSelected('B')"> B </a> </div>
+						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="C" onclick="playerSelected('C')"> C </a> </div>
+						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="D" onclick="playerSelected('D')"> D </a> </div>
+					</div>
+					<div id="timer" style="font-size:24;">
+					</div>                                                                   
+				</div>
+
 			</div>
-			<div id="video_container">
-				<div id="vid1" class="video"></div>
-				<div id="vid2" class="video"></div>
-				<div id="vid3" class="video"></div>
-				<div id="vid4" class="video"></div>
-			</div>
-			<div id="label_container">
-				<div id="label_button_wrapper"><a href="#" class="mingleButton" id="A" onclick="playerSelected('A')"> A </a> </div>
-				<div id="label_button_wrapper"><a href="#" class="mingleButton" id="B" onclick="playerSelected('B')"> B </a> </div>
-				<div id="label_button_wrapper"><a href="#" class="mingleButton" id="C" onclick="playerSelected('C')"> C </a> </div>
-				<div id="label_button_wrapper"><a href="#" class="mingleButton" id="D" onclick="playerSelected('D')"> D </a> </div>
-			</div>
-			<div id="timer" style="font-size:24;">
-			</div>                                                                   
-		</div>
-		
-	</div>
-</body>
-</html>
+		</body>
+		</html>

@@ -32,6 +32,14 @@ class Login extends CI_Controller {
 		$this->load->view('signup_form');
 	}
 	
+	
+	function give_question(){
+	    $item = ($this->input->post('item'));
+	    $array = array('result' => $item);
+	    echo json_encode('array');
+	}
+	
+	
 	function create_member()
 	{
 		$this->load->library('form_validation');
@@ -54,9 +62,8 @@ class Login extends CI_Controller {
 			$this->load->model('membership_model');
 			
 			if($query = $this->membership_model->create_member())
-			{
-				$data['main_content'] = 'signup_successful';
-				$this->load->view('includes/template', $data);
+			{   
+				$this->load->view('questions_form');
 			}
 			else
 			{

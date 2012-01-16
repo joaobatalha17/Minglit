@@ -33,7 +33,7 @@
 					<input id='email' class='question_input' name="email_address" onclick="clearValue('#email')"/>
 					<input type="password" id='psswd1' name="password" class='question_input' onclick="clearValue('#psswd1')"/>
 					<input type="password" id='psswd2' name="password2" class='question_input' onclick="clearValue('#psswd2')"/>
-					<input type="submit" name="submit" class='mingleButton' value="Create Account"/>
+					<input id="signup_form_button" type="submit" name="submit" class='mingleButton' value="Create Account"/>
 			</form>
 		</div>
 		<?php echo validation_errors('<p class="error">'); ?>

@@ -8,11 +8,16 @@ body{
 	background-color: #4F4F4F;
 	
 }
-/*
-**Style Elements for signup_form.php
-*/
-
+/************************************
+** signup_form.php
+*************************************/
 /*Some of style is from login_form.php*/
+
+#signup_form_button:active{
+	position:relative;
+	top:3px;
+}
+
 #signup_labels{
 	padding:0;
 	float:left;
@@ -45,9 +50,9 @@ body{
 	width: 350px;
 	height:350px;
 }
-/*
-** Style Elements for game_room.php
-*/
+/************************************
+** game_room.php
+*************************************/
 
 .mingleButton_active{
 	margin: 12px 0 0 11px;
@@ -164,9 +169,14 @@ body{
 	border-radius:10px;*/
 }
 
-/*
-**Sytle Elements for login_form.php
-*/
+/************************************
+** login_form.php
+*************************************/
+
+#submit_login_button:active{
+	position: relative;
+	left:3px;
+}
 
 .question_input{
 	border-width: 0;
@@ -244,6 +254,7 @@ body{
 	font-weight:bold;
 	padding:10px 10px;
 	text-decoration:none;
+	cursor:pointer;
 }
 
 .mingleButton:hover {
@@ -272,9 +283,14 @@ body{
 
 
 
-/*
-** Style Elements for questions_form.php
-*/
+/************************************
+** question_form.php
+*************************************/
+
+#question_submit_button:active{
+	position:relative;
+	top:3px;
+}
 
 #question_wrapper > #main{
 	height: 100%;
@@ -334,9 +350,9 @@ body{
 	color:lightgray;
 }
 
-/*
-** Style elements for landing.php
-*/
+/************************************
+** landing.php
+*************************************/
 
 #landing_wrapper > #main {
 	height: 100%;
@@ -453,4 +469,7 @@ ul {
 	height:50px;
 }
 
+/************************************
+** after_game.php
+*************************************/
 

@@ -7,6 +7,14 @@ class Login extends CI_Controller {
 		$this->load->view('login_form');		
 	}
 	
+	function give_question(){
+		echo "hellow there";
+		/*
+		$item = trim($this->input->post('item'));
+		$array = array('result' => $item);
+		echo json_encode($array);*/
+	}
+	
 	function validate_credentials()
 	{		
 		$this->load->model('membership_model');
@@ -55,8 +63,7 @@ class Login extends CI_Controller {
 			
 			if($query = $this->membership_model->create_member())
 			{
-				$data['main_content'] = 'signup_successful';
-				$this->load->view('includes/template', $data);
+				
 			}
 			else
 			{

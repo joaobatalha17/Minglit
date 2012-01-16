@@ -82,9 +82,11 @@
 		        }
 
 		        function addStream(stream) {
-					stream_count += 1;
-					startRound()
-					$("#question_container").text(stream_count.toString());
+					//stream_count += 1;
+					//if (stream_count === 1){//needs to be changed to four eventually
+						startRound();
+					//}
+					//$("#question_container").text(stream_count.toString());
 		        	// Check if this is the stream that I am publishing, and if so do not publish.
 		        	if (stream.connection.connectionId == session.connection.connectionId) {
 		        		return;
@@ -113,19 +115,19 @@
 					*/
 					function startRound(){
 						InitializeTimer();
-						getQuestion();
+						//getQuestion();
 					}
 
 					/* gets question and prints it on screen */
-					function getQuestion(){
-						$.post("<?php echo base_url() . 'login/give_question' ;?>",
-							{'item':"question"},
-							function(data){
-								$("#question_header").text(data.result);
-							},
-							'json'
-						);
-					}
+				/*	function getQuestion(){
+						$.ajax({
+							url:"<?php echo base_url() . 'index.php/login/give_question'; ?>",
+							success:function(data){
+								alert(data);
+							}
+						});
+					}*/
+		
 
 					/* gets answer to question and prints it on screen */
 					/*function getAnswer(){
@@ -169,7 +171,7 @@
 					function InitializeTimer()
 					{
 					    // Set the length of the timer, in seconds
-					    secs = 45
+					    secs = 30
 					    StopTheClock()
 					    StartTheTimer()
 					}
@@ -186,6 +188,7 @@
 					    if (secs==0)
 					    {
 					        StopTheClock()
+							$("#question_container").append("<h2 style='color:#4548FF'> The correct answer is David <h2>");
 					        //getAnswer()
 					    }
 					    else
@@ -204,7 +207,7 @@
 			<div id="game_wrapper">
 				<div id="main">
 					<div id="question_container">
-							<h1 id="question_header"> Who in this room skinny dipped last summer? </h1>
+							<h1 id="question_header"> Who in this room travelled to Egypt last summer? </h1>
 					</div>
 					<div id="video_container">
 						<div id="vid1" class="video"></div>
@@ -213,15 +216,16 @@
 						<div id="vid4" class="video"></div>
 					</div>
 					<div id="label_container">
-						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="A" onclick="playerSelected('A')"> A </a> </div>
-						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="B" onclick="playerSelected('B')"> B </a> </div>
-						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="C" onclick="playerSelected('C')"> C </a> </div>
-						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="D" onclick="playerSelected('D')"> D </a> </div>
+						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="A" onclick="playerSelected('A')"> Joao </a> </div>
+						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="B" onclick="playerSelected('B')"> David </a> </div>
+						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="C" onclick="playerSelected('C')"> Anna </a> </div>
+						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="D" onclick="playerSelected('D')"> Jenifer </a> </div>
 					</div>
 					<div id="timer" style="font-size:24;">
 					</div>                                                                   
 				</div>
 
 			</div>
+			<center><img src="<?php echo base_url() . 'img/minglit_logo_MIT.png';?>" /></center> <!delete this after meeting>
 		</body>
 		</html>

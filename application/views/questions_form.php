@@ -34,7 +34,7 @@
 					<input id="question2" class="question_input" type="text" name="answer2" onclick="clearValue('#question2')" /> 
 				 <p>What is your favorite color?</p>
 					<input id="question3" class="question_input" type="text" name="answer3" onclick="clearValue('#question3')" />
-				<div id="question_button_wrapper"><input type="submit" name="submit" class="mingleButton" onclick="connect()" value="Mingle >>>" /></div>
+				<div id="question_button_wrapper"><input id="question_submit_button" type="submit" name="submit" class="mingleButton" onclick="connect()" value="Mingle >>>" /></div>
 			</form>
 		</div>
 	</div>

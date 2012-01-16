@@ -4,10 +4,10 @@ class Chatroom_model extends CI_Model {
     var $status = 'FILLING';
     var $usercount = 0;
     var $tokboxID = 0;
-    var $user_0 = '';
-    var $user_1 = '';
-    var $user_2 = '';
-    var $user_3 = '';
+    var $user_0 = 0;
+    var $user_1 = 0;
+    var $user_2 = 0;
+    var $user_3 = 0;
     
     //var $question_0 = '';
     //var $question_1 = '';
@@ -40,7 +40,7 @@ class Chatroom_model extends CI_Model {
 		    $row = $query->row();
 		    $count = $row->usercount;
 		    if($count + 1 == 4){
-		        $data = array('user_'. $count => $arr['email_address'],
+		        $data = array('user_'. $count => $arr['user_id'],
         	                  'usercount' => $row->usercount + 1,
         	                  'status' => 'FULL'    
         	                 );
@@ -48,7 +48,7 @@ class Chatroom_model extends CI_Model {
         	    $result = $this->db->update('chatrooms', $data);
         	    return $result;
 		    } else {
-		        $data = array('user_'. $count => $arr['email_address'],
+		        $data = array('user_'. $count => $arr['user_id'],
         	                  'usercount' => $row->usercount + 1    
         	                 );
         	    $this->db->where('id' , $arr['id'] );
@@ -56,9 +56,6 @@ class Chatroom_model extends CI_Model {
         	    return $result; 
 		        
 		    }
-		}
-
-	    
-	    
+		}	    
 	}
 }

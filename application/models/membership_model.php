@@ -9,9 +9,9 @@ class Membership_model extends CI_Model {
 		$query = $this->db->get('membership');		
 		if($query->num_rows == 1)
 		{
-			return true;
+			return array(true , $query->row()->id);
 		}else{
-		    return false;
+		    return array(false, 0);
 		}
 		
 	}

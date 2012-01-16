@@ -27,7 +27,7 @@
 		        var publisher;
 		        var subscribers = {};
 
-				var stream_count = 0;
+				var stream_count = 3;
 
 		        if (TB.checkSystemRequirements() != TB.HAS_REQUIREMENTS) {
 		        	alert("You don't have the minimum requirements to run this application."

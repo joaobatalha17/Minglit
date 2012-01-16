@@ -12,10 +12,11 @@ class Login extends CI_Controller {
 		$this->load->model('membership_model');
 		$query = $this->membership_model->validate();
 		
-		if($query) // if the user's credentials validated...  $this->membership_model->validate(); returned true
+		if($query[0])
 		{
 			$data = array(
 				'email_address' => $this->input->post('email_address'),
+				'user_id' => $query[1],
 				'is_logged_in' => true
 			);
 			$this->session->set_userdata($data);
@@ -36,7 +37,7 @@ class Login extends CI_Controller {
 	function give_question(){
 	    $item = ($this->input->post('item'));
 	    $array = array('result' => $item);
-	    echo json_encode('array');
+	    echo json_encode($array);
 	}
 	
 	

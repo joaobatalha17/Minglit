@@ -1,5 +1,16 @@
 <?php
+
+require_once('application/tokbox_SDK/API_Config.php');
+require_once('application/tokbox_SDK/OpenTokSDK.php');
+require_once('application/tokbox_SDK/SessionPropertyConstants.php');
+
 class Chatroom_model extends CI_Model {
+    
+
+
+    var $apiObj;
+    var $session;
+    var $sessionId;
     
     var $status = 'FILLING';
     var $usercount = 0;
@@ -17,11 +28,23 @@ class Chatroom_model extends CI_Model {
     {
         // Call the Model constructor
         parent::__construct();
+        $this->apiObj =  new OpenTokSDK(API_Config::API_KEY, API_Config::API_SECRET);
+        $this->session = $this->apiObj->create_session($_SERVER["REMOTE_ADDR"]); 
+        $this->sessionId = substr($this->session->getSessionId()->asXML(), 12 , -13);
     }
 	
-	function create_chatroom()
+	function create_chatroom() //Hacky As Fuck (HAF)
 	{
-		$insert = $this->db->insert('chatrooms', $this);
+	    $this->tokboxID = $this->sessionId; 	    
+	    $data = array( 'status' => $this->status,
+	                    'usercount' => $this->usercount,
+	                    'tokboxID' => $this->sessionId,
+	                    'user_0' => $this->user_0,
+	                    'user_1' => $this->user_1,
+	                    'user_2' => $this->user_2,
+	                    'user_3' => $this->user_3
+	                 );
+		$insert = $this->db->insert('chatrooms', $data);
 		return $insert;
 	}
 	
@@ -39,7 +62,7 @@ class Chatroom_model extends CI_Model {
 		{
 		    $row = $query->row();
 		    $count = $row->usercount;
-		    if($count + 1 == 4){
+		    if($count + 1 == 4){ // The chatroom just got full. Create a new one and put the user in it
 		        $data = array('user_'. $count => $arr['user_id'],
         	                  'usercount' => $row->usercount + 1,
         	                  'status' => 'FULL'    

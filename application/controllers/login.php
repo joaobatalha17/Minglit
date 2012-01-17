@@ -7,14 +7,6 @@ class Login extends CI_Controller {
 		$this->load->view('login_form');		
 	}
 	
-	function give_question(){
-		echo "hellow there";
-		/*
-		$item = trim($this->input->post('item'));
-		$array = array('result' => $item);
-		echo json_encode($array);*/
-	}
-	
 	function validate_credentials()
 	{		
 		$this->load->model('membership_model');

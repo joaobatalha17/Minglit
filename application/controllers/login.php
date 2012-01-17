@@ -7,23 +7,16 @@ class Login extends CI_Controller {
 		$this->load->view('login_form');		
 	}
 	
-	function give_question(){
-		echo "hellow there";
-		/*
-		$item = trim($this->input->post('item'));
-		$array = array('result' => $item);
-		echo json_encode($array);*/
-	}
-	
 	function validate_credentials()
 	{		
 		$this->load->model('membership_model');
 		$query = $this->membership_model->validate();
 		
-		if($query) // if the user's credentials validated...  $this->membership_model->validate(); returned true
+		if($query[0])
 		{
 			$data = array(
 				'email_address' => $this->input->post('email_address'),
+				'user_id' => $query[1],
 				'is_logged_in' => true
 			);
 			$this->session->set_userdata($data);
@@ -39,6 +32,14 @@ class Login extends CI_Controller {
 	{
 		$this->load->view('signup_form');
 	}
+	
+	
+	function give_question(){
+	    $item = ($this->input->post('item'));
+	    $array = array('result' => $item);
+	    echo json_encode($array);
+	}
+	
 	
 	function create_member()
 	{
@@ -62,8 +63,8 @@ class Login extends CI_Controller {
 			$this->load->model('membership_model');
 			
 			if($query = $this->membership_model->create_member())
-			{
-				
+			{   
+				$this->load->view('questions_form');
 			}
 			else
 			{

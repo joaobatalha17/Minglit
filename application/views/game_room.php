@@ -11,7 +11,9 @@
 
 	    $apiObj = new OpenTokSDK(API_Config::API_KEY, API_Config::API_SECRET);
 	    $session = $apiObj->create_session($_SERVER["REMOTE_ADDR"]);
-	    $sessionId = $session->getSessionId();
+	    //$sessionId = $session->getSessionId();
+	    $sessionId= $tokboxID;
+
 	?>
 	<script>
 	    /*
@@ -19,9 +21,9 @@
 	    */
 	
 	    //requires php
-        var apiKey = '8179062'; //<?php print API_Config::API_KEY?>;
-        var sessionId = '153975e9d3ecce1d11baddd2c9d8d3c9d147df18';//'<?php print $sessionId; ?>';
-        var token = 'devtoken';//'<?php print $apiObj->generate_token($sessionId); ?>';
+        var apiKey = <?php print API_Config::API_KEY?>;
+        var sessionId = '<?php print $sessionId; ?>';
+        var token = '<?php print $apiObj->generate_token($sessionId); ?>';
 
   		        var session;
 		        var publisher;

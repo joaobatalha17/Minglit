@@ -13,7 +13,10 @@ class Game extends CI_Controller {
 	//We will have to change this later when we have a database with questions
 	function submit_questions(){
 	    $this->load->model('answer_model');
-	    $chatroom_id = $this->enter_chatroom();
+	    $return_array = $this->enter_chatroom();
+	    $chatroom_id = $return_array[0];
+	    $tokboxID = $return_array[1];
+	    $data['tokboxID'] = $tokboxID;
 	    $this->answer_model->insert_question($chatroom_id, 
 	                                           $this->session->userdata('user_id'),  
 	                                           'What is a fun activity you did last summer?', 
@@ -26,8 +29,8 @@ class Game extends CI_Controller {
 	                                           $this->session->userdata('user_id'),  
 	                                           'What is your favorite color?', 
 	                                           $this->input->post('answer3'));
-	
-		$this->load->view('game_room');
+
+		$this->load->view('game_room', $data);
 	}	
 	
 	function create_chatroom(){		
@@ -37,6 +40,7 @@ class Game extends CI_Controller {
 	
 	function enter_chatroom(){
 	    $chatroom_id;
+	    $tokboxID;
 	    $this->load->model('chatroom_model');
 	    $current_chatroom = $this->chatroom_model->get_current_chatroom();
 	    if($current_chatroom)
@@ -45,16 +49,18 @@ class Game extends CI_Controller {
 			$data['user_id'] = $this->session->userdata('user_id');
 			$this->chatroom_model->add_user($data);
 			$chatroom_id = $current_chatroom->id;
+			$tokboxID = $current_chatroom->tokboxID;
 		}
 		else
 		{
 			$query = $this->chatroom_model->create_chatroom();
-			$data['id'] = $query['id'];
+			$data['id'] = $query->id;
 			$data['user_id'] = $this->session->userdata('user_id');
 			$this->chatroom_model->add_user($data);
-		    $chatroom_id = $query['id'];
+		    $chatroom_id = $query->id;
+		    $tokboxID = $query->tokboxID;
 		}
-		return $chatroom_id;
+		return array($chatroom_id, $tokboxID );
 	    
 	}
 	//Include a function where we always have a current chatroom

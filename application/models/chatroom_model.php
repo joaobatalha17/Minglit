@@ -30,10 +30,10 @@ class Chatroom_model extends CI_Model {
         parent::__construct();
         $this->apiObj =  new OpenTokSDK(API_Config::API_KEY, API_Config::API_SECRET);
         $this->session = $this->apiObj->create_session($_SERVER["REMOTE_ADDR"]); 
-        $this->sessionId = substr($this->session->getSessionId()->asXML(), 12 , -13);
+        $this->sessionId = substr($this->session->getSessionId()->asXML(), 12 , -13);//Hacky As Fuck (HAF)
     }
 	
-	function create_chatroom() //Hacky As Fuck (HAF)
+	function create_chatroom() 
 	{
 	    $this->tokboxID = $this->sessionId; 	    
 	    $data = array( 'status' => $this->status,
@@ -44,8 +44,9 @@ class Chatroom_model extends CI_Model {
 	                    'user_2' => $this->user_2,
 	                    'user_3' => $this->user_3
 	                 );
-		$insert = $this->db->insert('chatrooms', $data);
-		return $insert;
+		$this->db->insert('chatrooms', $data);
+		$chatroom = $this->db->get_where('chatrooms', $data, 1);
+		return $chatroom->row();
 	}
 	
 	function get_current_chatroom(){
@@ -57,7 +58,6 @@ class Chatroom_model extends CI_Model {
 	//Adds user to a chatroom that is still not completely filled up
 	function add_user($arr){
 	    $query = $this->db->get_where('chatrooms', array('id' => $arr['id']), 1);
-	    
 	    if($query->num_rows == 1)
 		{
 		    $row = $query->row();
@@ -74,11 +74,12 @@ class Chatroom_model extends CI_Model {
 		        $data = array('user_'. $count => $arr['user_id'],
         	                  'usercount' => $row->usercount + 1    
         	                 );
+        	    
         	    $this->db->where('id' , $arr['id'] );
         	    $result = $this->db->update('chatrooms', $data);
         	    return $result; 
 		        
-		    }
-		}	    
+		    }	 
+		}   
 	}
 }

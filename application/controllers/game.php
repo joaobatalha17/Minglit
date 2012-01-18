@@ -3,6 +3,10 @@
 
 class Game extends CI_Controller {
     
+    var $question1;
+    var $question2;
+    var $question3;
+    
 	public function __construct(){
 	    parent::__construct();    
 	}
@@ -10,24 +14,53 @@ class Game extends CI_Controller {
 	function index(){
 	}
 	
-	//We will have to change this later when we have a database with questions
+	function questions()
+	{
+	    $this->load->model('question_model');
+	    
+	    //Getting random questions
+	    $q1 = $this->question_model->get_question();
+	    $q2 = $this->question_model->get_question();
+	    $q3 = $this->question_model->get_question();
+	    
+	    $this->question1 = $q1->question;
+	    $this->question2 = $q2->question;
+	    $this->question3 = $q3->question;
+	    
+	    $data['question1'] = $this->question1;
+	    $data['question2'] = $this->question2;
+	    $data['question3'] = $this->question3;
+	    
+	    //Storing random questions in the Session
+	    $this->session->set_userdata('question1', $this->question1);
+	    $this->session->set_userdata('question2', $this->question2);
+	    $this->session->set_userdata('question3', $this->question3);
+		$this->load->view('questions_form', $data);
+	}
+	
 	function submit_questions(){
 	    $this->load->model('answer_model');
 	    $return_array = $this->enter_chatroom();
 	    $chatroom_id = $return_array[0];
 	    $tokboxID = $return_array[1];
 	    $data['tokboxID'] = $tokboxID;
+	    
+	    //Getting the questions from the Session
+	    $this->question1 = $this->session->userdata('question1');
+        $this->question2 = $this->session->userdata('question2');
+	    $this->question3 = $this->session->userdata('question3');
+	    
 	    $this->answer_model->insert_question($chatroom_id, 
 	                                           $this->session->userdata('user_id'),  
-	                                           'What is a fun activity you did last summer?', 
+	                                           $this->question1, 
 	                                           $this->input->post('answer1'));
    	    $this->answer_model->insert_question($chatroom_id, 
    	                                           $this->session->userdata('user_id'),  
-   	                                           'How many siblings do you have?', 
+   	                                           $this->question2, 
    	                                           $this->input->post('answer2'));
 	    $this->answer_model->insert_question($chatroom_id, 
 	                                           $this->session->userdata('user_id'),  
-	                                           'What is your favorite color?', 
+	                                           $this->question3, 
 	                                           $this->input->post('answer3'));
 
 		$this->load->view('game_room', $data);
@@ -43,7 +76,8 @@ class Game extends CI_Controller {
 	    $tokboxID;
 	    $this->load->model('chatroom_model');
 	    $current_chatroom = $this->chatroom_model->get_current_chatroom();
-	    if($current_chatroom)
+	    
+	    if($current_chatroom) //Theer is a chatroom that is not full
 		{
 			$data['id'] = $current_chatroom->id;
 			$data['user_id'] = $this->session->userdata('user_id');
@@ -53,7 +87,7 @@ class Game extends CI_Controller {
 		}
 		else
 		{
-			$query = $this->chatroom_model->create_chatroom();
+			$query = $this->chatroom_model->create_chatroom(); //We have to create a new chatroom because all the other chatrooms are full
 			$data['id'] = $query->id;
 			$data['user_id'] = $this->session->userdata('user_id');
 			$this->chatroom_model->add_user($data);
@@ -63,8 +97,4 @@ class Game extends CI_Controller {
 		return array($chatroom_id, $tokboxID );
 	    
 	}
-	//Include a function where we always have a current chatroom
-	//we keep adding users to that current chatroom until we reach 4 users
-	//once we reach those users we generate another object.
-
 }

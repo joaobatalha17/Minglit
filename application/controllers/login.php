@@ -20,7 +20,7 @@ class Login extends CI_Controller {
 				'is_logged_in' => true
 			);
 			$this->session->set_userdata($data);
-			redirect('site/members_area');
+			redirect('game/questions');
 		}
 		else // incorrect email or password
 		{

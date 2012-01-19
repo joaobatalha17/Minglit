@@ -23,7 +23,7 @@
 	    //requires php
         var apiKey = <?php print API_Config::API_KEY?>;
         var sessionId = '<?php print $sessionId; ?>';
-        var token = '<?php print $apiObj->generate_token($sessionId); ?>';
+        var token = '<?php print $apiObj->generate_token($sessionId); ?>'; // generate_token(session_id, null, null, metadata)
 
   		        var session;
 		        var publisher;

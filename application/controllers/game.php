@@ -47,14 +47,14 @@ class Game extends CI_Controller {
 	    
 	    //Getting the questions from the Session
 	    $this->question1 = $this->session->userdata('question1');
-        $this->question2 = $this->session->userdata('question2');
+      $this->question2 = $this->session->userdata('question2');
 	    $this->question3 = $this->session->userdata('question3');
 	    
 	    $this->answer_model->insert_question($chatroom_id, 
 	                                           $this->session->userdata('user_id'),  
 	                                           $this->question1, 
 	                                           $this->input->post('answer1'));
-   	    $this->answer_model->insert_question($chatroom_id, 
+   	  $this->answer_model->insert_question($chatroom_id, 
    	                                           $this->session->userdata('user_id'),  
    	                                           $this->question2, 
    	                                           $this->input->post('answer2'));
@@ -64,6 +64,9 @@ class Game extends CI_Controller {
 	                                           $this->input->post('answer3'));
 
 		$this->load->view('game_room', $data);
+		//echo '<pre>';
+		//print_r($this->session->all_userdata());
+		//echo '</pre>';
 	}	
 	
 	function create_chatroom(){		
@@ -94,7 +97,9 @@ class Game extends CI_Controller {
 		    $chatroom_id = $query->id;
 		    $tokboxID = $query->tokboxID;
 		}
+		$this->session->set_userdata('chatroom_id', $chatroom_id);
 		return array($chatroom_id, $tokboxID );
+		
 	    
 	}
 }

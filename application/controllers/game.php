@@ -105,7 +105,7 @@ class Game extends CI_Controller {
 	function get_question_and_answer($id){
 	  $this->load->model('question_model');
 	  $query = $this->question_model->get_row_by_chatroomID($id);
-	  if(query->num_rows() == 1){
+	  if($query->num_rows() == 1){
 	    $row = $query->row();
 	    $result = array(
 	                    $row->question,

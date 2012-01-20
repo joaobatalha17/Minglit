@@ -19,9 +19,9 @@ class Game extends CI_Controller {
 	    $this->load->model('question_model');
 	    
 	    //Getting random questions
-	    $q1 = $this->question_model->get_question();
-	    $q2 = $this->question_model->get_question();
-	    $q3 = $this->question_model->get_question();
+	    $q1 = $this->question_model->get_random_question();
+	    $q2 = $this->question_model->get_random_question();
+	    $q3 = $this->question_model->get_random_question();
 	    
 	    $this->question1 = $q1->question;
 	    $this->question2 = $q2->question;
@@ -100,6 +100,21 @@ class Game extends CI_Controller {
 		$this->session->set_userdata('chatroom_id', $chatroom_id);
 		return array($chatroom_id, $tokboxID );
 		
-	    
 	}
+	
+	function get_question_and_answer($id){
+	  $this->load->model('question_model');
+	  $query = $this->question_model->get_row_by_chatroomID($id);
+	  if(query->num_rows() == 1){
+	    $row = $query->row();
+	    $result = array(
+	                    $row->question,
+	                    $row->answer,
+	                    $row->user_id
+	                  );
+	    return $result;
+	  }
+	  
+	}
+	
 }

@@ -27,6 +27,12 @@ class Answer_model extends CI_Model {
 	    return $query->row_array();
 	}
 	
+	function get_by_id($id){
+	    $this->db->where('id', $id);
+	    $query = $this->db->get('answers');
+	    return $query;
+	}
+	
 	function get_by_userid($user_id){
 	    $this->db->where('user_id', $user_id);
 	    $query = $this->db->get('answers');

@@ -30,4 +30,11 @@ class Membership_model extends CI_Model {
 		$insert = $this->db->insert('membership', $new_member_insert_data);
 		return $insert;
 	}
+	
+	function get_by_userID($user_id){
+	  $this->db->where('id', $user_id);
+    $query = $this->db->get('membership');
+    return $query;
+	}
+	
 }

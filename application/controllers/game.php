@@ -102,9 +102,13 @@ class Game extends CI_Controller {
 		
 	}
 	
-	function get_question_and_answer($id){
+	function get_new_question(){ // Returns random question and answer, taken from the set of responses that the users that are in a certain chatroom (with $id) gave. 
+	// 
+    $chatroom_id = 88; // BEWARE HARDCODED!
 	  $this->load->model('question_model');
-	  $query = $this->question_model->get_row_by_chatroomID($id);
+	  $this->load->model('chatroom_model');
+	  $query = $this->question_model->get_row_by_chatroomID($chatroom_id);
+
 	  if($query->num_rows() == 1){
 	    $row = $query->row();
 	    $result = array(
@@ -112,9 +116,56 @@ class Game extends CI_Controller {
 	                    $row->answer,
 	                    $row->user_id
 	                  );
+	    $this->chatroom_model->set_live_question($chatroom_id, $row->id);
 	    return $result;
 	  }
 	  
+	}
+	
+	function get_solution(){ // The user_id is the id of the user whose name was in the selected button
+    $chatroom_id = 88; //BEWARE HARDCODED!
+    $user_id = 2;
+
+	  $veredict;
+	  $correct_answer;
+	  
+	  $this->load->model('chatroom_model');
+	  $this->load->model('answer_model');
+	  $this->load->model('membership_model');
+	  
+	  $chatroom_query = $this->chatroom_model->get_by_id($chatroom_id);
+	  if($chatroom_query->num_rows() == 1){
+	    $chatroom = $chatroom_query->row();
+  	  $question_id = $chatroom->question;
+	  }
+
+	  
+	  $answer_query = $this->answer_model->get_by_id($question_id);
+	  if($answer_query->num_rows() == 1){
+	    $answer = $answer_query->row();
+	    $solution = $answer->user_id;
+	  }
+	  
+	  $user_query = $this->membership_model->get_by_userID($solution);
+	  if($user_query->num_rows() == 1){
+	    $user = $user_query->row();
+	    $first_name = $user->first_name;	  
+    }
+	  if($user_id == $solution){
+	    $veredict = true;
+	  }else{
+	    $veredict = false;
+	  }
+	  
+	  $result = array(
+	                  $veredict,
+	                  $first_name
+	                );
+	  
+	  //return $result;
+	  echo '<pre>';
+	  print_r($result);
+	  echo '</pre>';
 	}
 	
 }

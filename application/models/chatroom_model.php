@@ -55,6 +55,25 @@ class Chatroom_model extends CI_Model {
 	    return $query->row();
 	}
 	
+	
+	function get_by_id($id){
+	    $this->db->where('id', $id);
+	    $query = $this->db->get('chatrooms');
+	    return $query;
+	}
+	
+	function set_live_question($chatroom_id, $question_id){
+	      $query = $this->db->get_where('chatrooms', array('id' => $chatroom_id), 1);
+  	    if($query->num_rows == 1){
+  	      $row = $query->row();
+  	      $data = array(
+  	                      'question' => $question_id
+  	                    );
+  	      $this->db->where('id', $chatroom_id);
+  	      $this->db->update('chatrooms', $data);
+  	    }
+	  
+	}
 	//Adds user to a chatroom that is still not completely filled up
 	function add_user($arr){
 	    $query = $this->db->get_where('chatrooms', array('id' => $arr['id']), 1);

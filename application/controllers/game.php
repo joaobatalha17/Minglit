@@ -41,6 +41,13 @@ class Game extends CI_Controller {
 	function submit_questions(){
 	    $this->load->model('answer_model');
 	    $return_array = $this->enter_chatroom();
+	    
+	    
+	    echo "<pre>";
+	    print_r($this->session->all_userdata());
+	    echo "</pre>";
+	    
+	    
 	    $chatroom_id = $return_array[0];
 	    $tokboxID = $return_array[1];
 	    $data['tokboxID'] = $tokboxID;
@@ -166,6 +173,41 @@ class Game extends CI_Controller {
 	  echo '<pre>';
 	  print_r($result);
 	  echo '</pre>';
+	}
+	
+	function get_user_position(){
+    $other_userid = 3;
+	  $chatroom_id = $this->session->userdata('chatroom_id');
+
+	  $this->load->model('chatroom_model');
+	  $chatroom_query = $this->chatroom_model->get_by_id($chatroom_id);
+	  $chatroom = $chatroom_query->row_array();
+	  
+	  if($chatroom['user_0']){
+	    if($other_userid == $chatroom['user_0']){
+	      echo 0;
+	    }
+	  }
+	  
+	  if($chatroom['user_1']){
+	    if($other_userid == $chatroom['user_1']){
+	      echo 1;
+	    }
+	  }
+	  
+	  if($chatroom['user_2']){
+	    if($other_userid == $chatroom['user_2']){
+	      echo 2;
+	    }
+	  }
+	  
+	  if($chatroom['user_3']){
+	    if($other_userid == $chatroom['user_3']){
+	      echo 3;
+	    }
+	  }
+	  
+	  	  
 	}
 	
 }

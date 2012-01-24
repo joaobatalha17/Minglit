@@ -13,6 +13,7 @@
 	    $session = $apiObj->create_session($_SERVER["REMOTE_ADDR"]);
 	    //$sessionId = $session->getSessionId();
 	    $sessionId= $tokboxID;
+	    
 
 	?>
 	<script>
@@ -23,7 +24,7 @@
 	    //requires php
         var apiKey = <?php print API_Config::API_KEY?>;
         var sessionId = '<?php print $sessionId; ?>';
-        var token = '<?php print $apiObj->generate_token($sessionId); ?>'; // generate_token(session_id, null, null, metadata)
+        var token = '<?php print $apiObj->generate_token($sessionId, null, null, (string)$user_id); ?>'; // generate_token(session_id, null, null, metadata)
 
         var session;
         var publisher;
@@ -54,7 +55,7 @@
 		        // For user to start publishing to the session
 		        function startPublishing() {
 		        	if (!publisher) {
-		        		var parentDiv = document.getElementById("vid1");
+		        		var parentDiv = document.getElementById("<?php echo 'position_' . (string)$user_position; ?>");
 		        		var publisherDiv = document.createElement('div'); // Create a div for the publisher to replace
 		        		var publisherProps = {width: 299, height: 224, subscribeToAudio: true};
 		        		publisherDiv.setAttribute('id', 'flash_video');
@@ -93,20 +94,34 @@
 		        	if (stream.connection.connectionId == session.connection.connectionId) {
 		        		return;
 		        	}
-		        	var divArray = new Array('vid2','vid3','vid4');
+		        /*	var divArray = new Array('vid2','vid3','vid4');
 		        	var count = 0;
 		        	while (document.getElementById(divArray[count]).hasChildNodes()){
 		        		count += 1;
-		        	}
-		        	var subscriberDiv = document.createElement('div'); // Create a div for the subscriber to replace
-		        	var parent = divArray[count];
+		        	}*/
+		        	get_position(stream);
+		        	/*var subscriberDiv = document.createElement('div'); // Create a div for the subscriber to replace
+		        	var parent = "position_"+get_position(stream.connection.data);//divArray[count];
+		        	alert(parent);
 		        	var subscriberProps = {width: 299, height: 224, subscribeToAudio: true};
 		        	subscriberDiv.setAttribute('id', stream.streamId); // Give the replacement div the id of the stream as its id.
 		        	document.getElementById(parent).appendChild(subscriberDiv);		
-		        	subscribers[parent] = session.subscribe(stream, subscriberDiv.id, subscriberProps);
+		        	subscribers[parent] = session.subscribe(stream, subscriberDiv.id, subscriberProps);*/
 
 		        }
+		        
 
+            function get_position(stream){
+              $.post("<?php echo base_url() . 'index.php/game/get_user_position'; ?>", {other_user_id: stream.connection.data},
+                 function(data) {
+                   var subscriberDiv = document.createElement('div'); // Create a div for the subscriber to replace
+     		        	var parent = "position_"+data.toString();//divArray[count];
+     		        	var subscriberProps = {width: 299, height: 224, subscribeToAudio: true};
+     		        	subscriberDiv.setAttribute('id', stream.streamId); // Give the replacement div the id of the stream as its id.
+     		        	document.getElementById(parent).appendChild(subscriberDiv);		
+     		        	subscribers[parent] = session.subscribe(stream, subscriberDiv.id, subscriberProps);
+                 });
+            }
 
 				//--------------------------------------
 				//  Game Code
@@ -212,10 +227,10 @@
 							<h1 id="question_header"> Who in this room travelled to Egypt last summer? </h1>
 					</div>
 					<div id="video_container">
-						<div id="vid1" class="video"></div>
-						<div id="vid2" class="video"></div>
-						<div id="vid3" class="video"></div>
-						<div id="vid4" class="video"></div>
+						<div id="position_0" class="video"></div>
+						<div id="position_1" class="video"></div>
+						<div id="position_2" class="video"></div>
+						<div id="position_3" class="video"></div>
 					</div>
 					<div id="label_container">
 						<div id="label_button_wrapper"><a href="#" class="mingleButton" id="A" onclick="playerSelected('A')"> Joao </a> </div>

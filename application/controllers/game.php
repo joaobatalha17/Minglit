@@ -51,6 +51,7 @@ class Game extends CI_Controller {
 	    $chatroom_id = $return_array[0];
 	    $tokboxID = $return_array[1];
 	    $data['tokboxID'] = $tokboxID;
+	    $data['user_id'] = $this->session->userdata('user_id');
 	    
 	    //Getting the questions from the Session
 	    $this->question1 = $this->session->userdata('question1');
@@ -69,8 +70,10 @@ class Game extends CI_Controller {
 	                                           $this->session->userdata('user_id'),  
 	                                           $this->question3, 
 	                                           $this->input->post('answer3'));
+	    
+	    $data['user_position'] = $this->get_position();
 
-		$this->load->view('game_room', $data);
+   		$this->load->view('game_room', $data);
 		//echo '<pre>';
 		//print_r($this->session->all_userdata());
 		//echo '</pre>';
@@ -175,8 +178,43 @@ class Game extends CI_Controller {
 	  echo '</pre>';
 	}
 	
+	function get_position(){
+	  $other_userid = $this->session->userdata('user_id');
+	  $chatroom_id = $this->session->userdata('chatroom_id');
+
+	  $this->load->model('chatroom_model');
+	  $chatroom_query = $this->chatroom_model->get_by_id($chatroom_id);
+	  $chatroom = $chatroom_query->row_array();
+	  
+	  if($chatroom['user_0']){
+	    if($other_userid == $chatroom['user_0']){
+	      return 0;
+	    }
+	  }
+	  
+	  if($chatroom['user_1']){
+	    if($other_userid == $chatroom['user_1']){
+	      return 1;
+	    }
+	  }
+	  
+	  if($chatroom['user_2']){
+	    if($other_userid == $chatroom['user_2']){
+	      return 2;
+	    }
+	  }
+	  
+	  if($chatroom['user_3']){
+	    if($other_userid == $chatroom['user_3']){
+	      return 3;
+	    }
+	  }
+	  
+	  	  
+	}
+	
 	function get_user_position(){
-    $other_userid = 3;
+	  $other_userid = $this->input->post('other_user_id');
 	  $chatroom_id = $this->session->userdata('chatroom_id');
 
 	  $this->load->model('chatroom_model');

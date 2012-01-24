@@ -25,9 +25,9 @@
         var sessionId = '<?php print $sessionId; ?>';
         var token = '<?php print $apiObj->generate_token($sessionId); ?>'; // generate_token(session_id, null, null, metadata)
 
-  		        var session;
-		        var publisher;
-		        var subscribers = {};
+        var session;
+        var publisher;
+        var subscribers = {};
 
 				var stream_count = 3;
 

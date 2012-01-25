@@ -38,4 +38,15 @@ class Answer_model extends CI_Model {
 	    $query = $this->db->get('answers');
 	    return $query->row_array();
 	}
+	
+	function get_rnd_row($id){
+    $answer_id;
+    $this->db->where('chatroom_id', $id);
+    $this->db->order_by('id', 'RANDOM');
+    $this->db->limit(1);
+    $query = $this->db->get('answers');
+    return $query;
+
+  }
+	
 }

@@ -18,9 +18,6 @@ class Question_model extends CI_Model {
     $query = $this->db->get('answers');
     $row = $query->row();
     $question_id = $row->id;
-    echo '<pre>';
-	  print_r($query->result());
-	  echo '</pre>';
     $data = array(
                    'used' => 1
                 );

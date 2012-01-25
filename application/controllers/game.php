@@ -74,15 +74,16 @@ class Game extends CI_Controller {
 	    $data['user_position'] = $this->get_position();
 
    		$this->load->view('game_room', $data);
-		//echo '<pre>';
-		//print_r($this->session->all_userdata());
-		//echo '</pre>';
+    // echo '<pre>';
+    // print_r($this->session->all_userdata());
+    // echo '</pre>';
 	}	
 	
 	function create_chatroom(){		
 	    $this->load->model('chatroom_model');
 	    $this->chatroom_model->create_chatroom();
 	}
+		
 	
 	function enter_chatroom(){
 	    $chatroom_id;
@@ -97,6 +98,9 @@ class Game extends CI_Controller {
 			$this->chatroom_model->add_user($data);
 			$chatroom_id = $current_chatroom->id;
 			$tokboxID = $current_chatroom->tokboxID;
+			if($current_chatroom->usercount + 1 == 2){ // + 1 because the $current_chatroom is the chatroom object before you called add_user() on it
+	      $this->set_question($chatroom_id);
+	    }
 		}
 		else
 		{
@@ -106,29 +110,67 @@ class Game extends CI_Controller {
 			$this->chatroom_model->add_user($data);
 		    $chatroom_id = $query->id;
 		    $tokboxID = $query->tokboxID;
+
 		}
 		$this->session->set_userdata('chatroom_id', $chatroom_id);
 		return array($chatroom_id, $tokboxID );
 		
 	}
 	
-	function get_new_question(){ // Returns random question and answer, taken from the set of responses that the users that are in a certain chatroom (with $id) gave. 
-	// 
-    $chatroom_id = 88; // BEWARE HARDCODED!
-	  $this->load->model('question_model');
+  // function get_new_question($chatroom_id){ // Returns random question and answer, taken from the set of responses that the users that are in a certain chatroom (with $id) gave. 
+   
+  //   $this->load->model('question_model');
+  //   $this->load->model('chatroom_model');
+  //   $query = $this->question_model->get_row_by_chatroomID($chatroom_id);
+  // 
+    // if($query->num_rows() == 1){
+    //   $row = $query->row();
+    //   $result = array(
+    //                   $row->question,
+    //                   $row->answer,
+    //                   $row->user_id
+    //                 );
+    //   $this->chatroom_model->set_live_question($chatroom_id, $row->id);
+    //   return $result;
+  //   }
+  //   
+  // }
+	
+	
+	function set_question($chatroom_id){	  
 	  $this->load->model('chatroom_model');
-	  $query = $this->question_model->get_row_by_chatroomID($chatroom_id);
-
-	  if($query->num_rows() == 1){
-	    $row = $query->row();
-	    $result = array(
-	                    $row->question,
-	                    $row->answer,
-	                    $row->user_id
-	                  );
-	    $this->chatroom_model->set_live_question($chatroom_id, $row->id);
-	    return $result;
-	  }
+	  $this->load->model('answer_model');
+	  
+	  $answer_query = $this->answer_model->get_rnd_row($chatroom_id);
+	  $answer = $answer_query->row();
+	  $answer_id = $answer->id;
+	  $this->chatroom_model->set_live_question($chatroom_id, $answer_id);
+	  
+	}
+	
+	function get_question(){
+	  $this->load->model('chatroom_model');
+	  $this->load->model('answer_model');
+	  
+	  
+	  $chatroom_id = $this->session->userdata('chatroom_id');
+	  $chatroom_query = $this->chatroom_model->get_by_id($chatroom_id);
+	  $chatroom = $chatroom_query->row();
+	  $answer_id = $chatroom->question;
+	  $answer_query = $this->answer_model->get_by_id($answer_id);
+	  
+    if($answer_query->num_rows() == 1){
+      $row = $answer_query->row();
+      $result = array(
+                      'question' => $row->question,
+                      'answer' => $row->answer,
+                      'user_id' => $row->user_id
+                    );
+      echo '<pre>';
+      print_r($result);
+      echo '</pre>';
+      return $result; 
+    }
 	  
 	}
 	
@@ -172,12 +214,11 @@ class Game extends CI_Controller {
 	                  $first_name
 	                );
 	  
-	  //return $result;
-	  echo '<pre>';
-	  print_r($result);
-	  echo '</pre>';
+	  return $result;
+
 	}
 	
+
 	function get_position(){
 	  $other_userid = $this->session->userdata('user_id');
 	  $chatroom_id = $this->session->userdata('chatroom_id');

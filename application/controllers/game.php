@@ -148,6 +148,11 @@ class Game extends CI_Controller {
 	  
 	}
 	
+	function test(){
+	  echo 'test';
+	  return 'test2';
+	}
+	
 	function get_question(){
 	  $this->load->model('chatroom_model');
 	  $this->load->model('answer_model');
@@ -158,7 +163,7 @@ class Game extends CI_Controller {
 	  $chatroom = $chatroom_query->row();
 	  $answer_id = $chatroom->question;
 	  $answer_query = $this->answer_model->get_by_id($answer_id);
-	  
+
     if($answer_query->num_rows() == 1){
       $row = $answer_query->row();
       $result = array(
@@ -166,10 +171,7 @@ class Game extends CI_Controller {
                       'answer' => $row->answer,
                       'user_id' => $row->user_id
                     );
-      echo '<pre>';
-      print_r($result);
-      echo '</pre>';
-      return $result; 
+      echo "Who responded: " . $row->answer . " to the question: " . $row->question; // TO BE CHANGED
     }
 	  
 	}

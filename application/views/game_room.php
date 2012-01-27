@@ -30,7 +30,7 @@
         var publisher;
         var subscribers = {};
 
-				var stream_count = 3;
+				var stream_count = 0;
 
 		        if (TB.checkSystemRequirements() != TB.HAS_REQUIREMENTS) {
 		        	alert("You don't have the minimum requirements to run this application."
@@ -84,11 +84,17 @@
 		        	stream_count -= 1;
 		        }
 
-		        function addStream(stream) {
-					//stream_count += 1;
-					//if (stream_count === 1){//needs to be changed to four eventually
+		        function addStream(stream){
+            stream_count += 1;
+            if(stream_count === 2){
+              $.get("<?php echo base_url() . 'index.php/game/get_question'; ?>", function(data){
+              document.getElementById("question_header").innerHTML=data;
+              });
+              
+            }
+
 						startRound();
-					//}
+
 					//$("#question_container").text(stream_count.toString());
 		        	// Check if this is the stream that I am publishing, and if so do not publish.
 		        	if (stream.connection.connectionId == session.connection.connectionId) {
